@@ -1,33 +1,24 @@
-package org.firstinspires.ftc.teamcode.tuning;
+package org.firstinspires.ftc.teamcode.tuning.Position;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.pedropathing.util.CustomPIDFCoefficients;
-import com.pedropathing.util.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
-import com.qualcomm.robotcore.hardware.PwmControl;
-
 import org.firstinspires.ftc.teamcode.Const;
 
 @Config
 @TeleOp
-public class Tuning extends OpMode {
+public class ServoTuning extends OpMode {
     public static Servo outtakeRot, outtakeDistRight, outtakeDistLeft, intakeRot, outtakeClaw, outtakeTwist, shifter;
 
     public static double outtakeRotPos = 0.5, outtakeDistRightPos = 0.5, outtakeDistLeftPos = 0.5;
     public static double intakeRotPos = 0.5, outtakeClawPos = 0.5, outtakeTwistPos = 0.5;
     public static double shifterPos = 0.2;
 
-
     @Override
     public void init() {
-
         outtakeRot = hardwareMap.get(Servo.class, Const.outtakeRot);
         outtakeDistRight = hardwareMap.get(Servo.class, Const.outtakeDistRight);
         outtakeDistLeft = hardwareMap.get(Servo.class, Const.outtakeDistLeft);
@@ -36,7 +27,6 @@ public class Tuning extends OpMode {
         outtakeTwist = hardwareMap.get(Servo.class, Const.outtakeTwist);
         shifter = hardwareMap.get(Servo.class, Const.gearShifter);
 
-        // Set PWM Range for Servos
         Servo[] servos = {outtakeRot, outtakeDistRight, outtakeDistLeft, intakeRot, outtakeClaw, outtakeTwist, shifter};
         for (Servo servo : servos) {
             ((ServoImplEx) servo).setPwmRange(new PwmControl.PwmRange(500, 2500, 5000));
@@ -45,7 +35,6 @@ public class Tuning extends OpMode {
 
     @Override
     public void loop() {
-        // Ensure servo positions are within range
         outtakeRot.setPosition(Math.max(0, Math.min(1, outtakeRotPos)));
         outtakeDistRight.setPosition(Math.max(0, Math.min(1, outtakeDistRightPos)));
         outtakeDistLeft.setPosition(Math.max(0, Math.min(1, outtakeDistLeftPos)));
